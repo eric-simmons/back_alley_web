@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: back-alley-web
+    env: ruby
+    buildCommand: ./bin/render-build.sh
+    startCommand: bin/rails server
+    plan: free
+    envVars:
+      - key: RAILS_MASTER_KEY
+        sync: false
