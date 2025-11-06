@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ -f Procfile.dev ]; then
+  exec foreman start -f Procfile.dev "$@"
+else
+  echo "Procfile.dev not found. Try running: bin/rails server"
+fi

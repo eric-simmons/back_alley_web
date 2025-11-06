@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Back Alley Studio</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <!-- Rails builds -->
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload", rel: "stylesheet" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body class="bg-gray-50 text-gray-900 font-sans">
+    <header class="bg-black text-white p-6 flex justify-between items-center">
+      <h1 class="text-xl font-bold"><%= link_to "Back Alley Studio", root_path %></h1>
+      <nav class="space-x-6">
+        <%= link_to "Home", root_path, class: "hover:underline" %>
+        <%= link_to "About", "#", class: "hover:underline" %>
+        <%= link_to "Services", "#", class: "hover:underline" %>
+        <%= link_to "Contact", "#", class: "hover:underline" %>
+      </nav>
+    </header>
+
+    <main class="max-w-4xl mx-auto p-8">
+      <%= yield %>
+    </main>
+
+    <footer class="text-center p-6 text-sm text-gray-500 border-t mt-12">
+      © <%= Date.today.year %> Back Alley Studio
+    </footer>
+  </body>
+</html>
