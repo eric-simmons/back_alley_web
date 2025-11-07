@@ -8,3 +8,17 @@ services:
     envVars:
       - key: RAILS_MASTER_KEY
         sync: false
+    buildFilter:
+      paths:
+        - Gemfile*
+        - yarn.lock
+        - package.json
+        - app/assets/**
+        - app/javascript/**
+        - app/stylesheets/**
+        - bin/**
+        - config/**
+        - db/**
+        - render.yaml
+        - postcss.config.js
+        - tailwind.config.js
