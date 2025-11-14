@@ -21,11 +21,6 @@ test:
   database: storage/test.sqlite3
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  database: back_alley_web_production
-  username: postgres
-  password: <%= ENV["DATABASE_URL"] ? nil : "password" %>
-  url: <%= ENV["DATABASE_URL"] %>
+  <<: *default
+  database: storage/production.sqlite3
 
