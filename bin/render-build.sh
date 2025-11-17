@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
-# Exit on error
 set -o errexit
-mkdir -p tmp/cache
-export BUNDLE_PATH=vendor/bundle
-export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
 
+# Install Ruby gems
+bundle install --without development test
 
-bundle install
-yarn install
-yarn build:css         
+# Install JS dependencies
+yarn install --frozen-lockfile || true
+
+# Compile assets
 bundle exec rake assets:precompile
+
+# Run migrations
 bundle exec rake db:migrate
