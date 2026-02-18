@@ -1,0 +1,178 @@
+<% content_for :body_class do %>sp-page font-mono<% end %>
+<% content_for :main_class do %>max-w-screen-xl mx-auto px-8 py-12<% end %>
+<% content_for :footer_class do %><style>footer { color: #4a3220; border-color: #2a1a0c; }</style><% end %>
+
+<%# ── Breadcrumb ──────────────────────────────────────── %>
+<div class="flex items-center gap-2 mb-12 text-xs tracking-widest" style="color: #3a2410;">
+  <%= link_to "CATALOG", cabs_path, style: "color:#5a3820;", class: "hover:underline transition-colors" %>
+  <span>/ CABS /</span>
+  <span style="color: #c8a060;"><%= @cab[:name].upcase %></span>
+  <span class="ml-auto">
+    <%= link_to "← RETURN", cabs_path, style: "color:#5a3820; border: 1px solid #2a1a0c; padding: 4px 12px;", class: "hover:underline" %>
+  </span>
+</div>
+
+<%# ── Main content: two-column ────────────────────────── %>
+<div class="grid grid-cols-1 lg:grid-cols-5 gap-10 mb-16">
+
+  <%# ── Left: Schematic drawing ── %>
+  <div class="lg:col-span-3">
+    <div class="relative p-8 scanline-wrap" style="border: 1px solid #2a1a0c; background: linear-gradient(160deg, #141008 0%, #0c0a07 100%);">
+
+      <%# Corner rivets %>
+      <div class="rivet" style="top:10px; left:10px;"></div>
+      <div class="rivet" style="top:10px; right:10px;"></div>
+      <div class="rivet" style="bottom:10px; left:10px;"></div>
+      <div class="rivet" style="bottom:10px; right:10px;"></div>
+
+      <%# Drawing label bar %>
+      <div class="flex justify-between items-center mb-6">
+        <span class="text-xs tracking-[0.3em]" style="color: #4a3218;">DWG. NO. CAB-<%= @cab[:year] %></span>
+        <span class="animate-gear-cw text-base select-none" style="animation-duration: 18s; color: #3a2810; display:inline-block;">⚙</span>
+        <span class="text-xs tracking-[0.3em]" style="color: #4a3218;">SCALE 1:10</span>
+      </div>
+
+      <%# Speaker schematic SVG %>
+      <svg viewBox="0 0 400 440" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+
+        <%# Margin tick marks %>
+        <% [70, 200, 330].each do |x| %>
+          <line x1="<%= x %>" y1="8" x2="<%= x %>" y2="18" stroke="#3a2010" stroke-width="0.8"/>
+        <% end %>
+        <% [70, 170, 310].each do |y| %>
+          <line x1="8" y1="<%= y %>" x2="18" y2="<%= y %>" stroke="#3a2010" stroke-width="0.8"/>
+        <% end %>
+
+        <%# Outer cabinet rectangle %>
+        <rect x="55" y="28" width="290" height="290" rx="7" stroke="#c07838" stroke-width="1.5"/>
+
+        <%# Inner inset (bezel) %>
+        <rect x="68" y="41" width="264" height="264" rx="4" stroke="#4a2a10" stroke-width="0.8" stroke-dasharray="4,4"/>
+
+        <%# Speaker circles ─ concentric %>
+        <circle cx="200" cy="168" r="118" stroke="#c07838"  stroke-width="1.5"/>
+        <circle cx="200" cy="168" r="88"  stroke="#6a3e18"  stroke-width="0.8"/>
+        <circle cx="200" cy="168" r="60"  stroke="#6a3e18"  stroke-width="0.8" stroke-dasharray="3,4"/>
+        <circle cx="200" cy="168" r="38"  stroke="#c07838"  stroke-width="1.2"/>
+        <circle cx="200" cy="168" r="18"  stroke="#c07838"  stroke-width="1"/>
+        <circle cx="200" cy="168" r="7"   stroke="#c07838"  stroke-width="1"/>
+        <circle cx="200" cy="168" r="3"   fill="#c07838"    opacity="0.6"/>
+
+        <%# Crosshair lines (dashed) %>
+        <line x1="200" y1="28"  x2="200" y2="318" stroke="#3a2010" stroke-width="0.6" stroke-dasharray="5,9"/>
+        <line x1="55"  y1="168" x2="345" y2="168" stroke="#3a2010" stroke-width="0.6" stroke-dasharray="5,9"/>
+
+        <%# Spider surround detail lines at 45° %>
+        <line x1="164" y1="132" x2="175" y2="143" stroke="#4a2e14" stroke-width="0.8"/>
+        <line x1="236" y1="132" x2="225" y2="143" stroke="#4a2e14" stroke-width="0.8"/>
+        <line x1="164" y1="204" x2="175" y2="193" stroke="#4a2e14" stroke-width="0.8"/>
+        <line x1="236" y1="204" x2="225" y2="193" stroke="#4a2e14" stroke-width="0.8"/>
+
+        <%# Corner screws (4 corners) %>
+        <% [[75,48],[325,48],[75,298],[325,298]].each do |cx,cy| %>
+          <circle cx="<%= cx %>" cy="<%= cy %>" r="6" stroke="#c07838" stroke-width="1"/>
+          <line x1="<%= cx-4 %>" y1="<%= cy %>" x2="<%= cx+4 %>" y2="<%= cy %>" stroke="#c07838" stroke-width="0.8"/>
+          <line x1="<%= cx %>" y1="<%= cy-4 %>" x2="<%= cx %>" y2="<%= cy+4 %>" stroke="#c07838" stroke-width="0.8"/>
+        <% end %>
+
+        <%# Horizontal dimension line (below cabinet) %>
+        <line x1="55"  y1="334" x2="345" y2="334" stroke="#5a3618" stroke-width="0.8"/>
+        <line x1="55"  y1="329" x2="55"  y2="339" stroke="#5a3618" stroke-width="0.8"/>
+        <line x1="345" y1="329" x2="345" y2="339" stroke="#5a3618" stroke-width="0.8"/>
+        <text x="200" y="350" text-anchor="middle" fill="#4a2e14" font-size="8" font-family="monospace" letter-spacing="2">752mm</text>
+
+        <%# Vertical dimension line (right of cabinet) %>
+        <line x1="362" y1="28"  x2="362" y2="318" stroke="#5a3618" stroke-width="0.8"/>
+        <line x1="357" y1="28"  x2="367" y2="28"  stroke="#5a3618" stroke-width="0.8"/>
+        <line x1="357" y1="318" x2="367" y2="318" stroke="#5a3618" stroke-width="0.8"/>
+        <text x="378" y="178" text-anchor="middle" fill="#4a2e14" font-size="8" font-family="monospace" letter-spacing="2" transform="rotate(90,378,178)">752mm</text>
+
+        <%# Gear watermark — top right of drawing %>
+        <text x="340" y="22" text-anchor="middle" fill="#2a1a08" font-size="16" font-family="serif">⚙</text>
+
+        <%# Title block (bottom) %>
+        <rect x="55" y="365" width="290" height="65" stroke="#3a2010" stroke-width="0.8"/>
+        <line x1="55" y1="380" x2="345" y2="380" stroke="#3a2010" stroke-width="0.5"/>
+        <line x1="200" y1="380" x2="200" y2="430" stroke="#3a2010" stroke-width="0.5"/>
+
+        <text x="127" y="376" text-anchor="middle" fill="#3a2010" font-size="7" font-family="monospace" letter-spacing="2">CABINET TYPE</text>
+        <text x="127" y="400" text-anchor="middle" fill="#7a4a20" font-size="10" font-family="monospace" font-weight="bold"><%= @cab[:size] %></text>
+
+        <text x="272" y="376" text-anchor="middle" fill="#3a2010" font-size="7" font-family="monospace" letter-spacing="2">YEAR</text>
+        <text x="272" y="400" text-anchor="middle" fill="#7a4a20" font-size="10" font-family="monospace" font-weight="bold"><%= @cab[:year] %></text>
+
+        <text x="200" y="418" text-anchor="middle" fill="#3a2010" font-size="7" font-family="monospace" letter-spacing="3">BACK ALLEY STUDIO · FRONT VIEW</text>
+      </svg>
+
+    </div>
+  </div>
+
+  <%# ── Right: Specs + Purchase ── %>
+  <div class="lg:col-span-2 flex flex-col gap-6">
+
+    <%# Cab title %>
+    <div>
+      <p class="text-xs tracking-[0.4em] mb-2" style="color: #4a3218;">CABINET SPECIFICATIONS</p>
+      <div class="h-px mb-4" style="background: linear-gradient(to right, #c07838, transparent);"></div>
+      <h1 class="text-3xl font-bold leading-tight" style="color: #c8a870;"><%= @cab[:name] %></h1>
+    </div>
+
+    <%# Instrument-panel spec grid %>
+    <div class="grid grid-cols-2 gap-2">
+      <% [
+        ["SPEAKER",   @cab[:size]],
+        ["WOOD",      @cab[:wood]],
+        ["FINISH",    @cab[:finish]],
+        ["YEAR",      @cab[:year].to_s],
+        ["CONDITION", @cab[:condition]],
+        ["WEIGHT",    @cab[:weight]],
+      ].each do |label, value| %>
+        <div class="p-3 relative" style="border: 1px solid #2a1a0c; background: #0f0c08;">
+          <p class="text-[9px] tracking-[0.25em] mb-1" style="color: #4a3218;"><%= label %></p>
+          <div class="h-px mb-2" style="background: #1e1408;"></div>
+          <p class="text-xs font-bold leading-tight" style="color: #c8a060;"><%= value.to_s.upcase %></p>
+        </div>
+      <% end %>
+    </div>
+
+    <%# Price panel %>
+    <div class="p-6 text-center scanline-wrap" style="border: 1px solid #4a2a10; background: linear-gradient(150deg, #1a1005, #0c0a07);">
+      <p class="text-[9px] tracking-[0.4em] mb-3" style="color: #4a3218;">ASKING PRICE</p>
+      <div class="h-px mb-5" style="background: linear-gradient(to right, transparent, #c07838, transparent);"></div>
+      <p class="text-5xl font-bold animate-flicker" style="color: #c07838;">$<%= number_with_delimiter(@cab[:price]) %></p>
+      <div class="h-px mt-5 mb-6" style="background: linear-gradient(to right, transparent, #c07838, transparent);"></div>
+      <button class="w-full py-3 text-xs tracking-[0.4em] uppercase transition-all duration-300 hover:brightness-125"
+              style="border: 1px solid #7a4a20; color: #c8a060; background: #1a1005;">
+        ── INQUIRE NOW ──
+      </button>
+    </div>
+
+    <%# Notes / description %>
+    <div style="border-left: 2px solid #3a2010; padding-left: 16px;">
+      <p class="text-[9px] tracking-[0.3em] mb-2" style="color: #4a3218;">FIELD NOTES</p>
+      <p class="text-xs leading-relaxed" style="color: #6a5038;"><%= @cab[:desc] %></p>
+    </div>
+
+  </div>
+</div>
+
+<%# ── Other cabs in catalog ──────────────────────────── %>
+<div class="mb-4">
+  <div class="flex items-center gap-4 mb-8">
+    <div class="h-px flex-1" style="background: linear-gradient(to right, transparent, #2a1a0c);"></div>
+    <span class="text-xs tracking-[0.4em]" style="color: #3a2410;">MORE FROM THE CATALOG</span>
+    <div class="h-px flex-1" style="background: linear-gradient(to left, transparent, #2a1a0c);"></div>
+  </div>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
+    <% PagesController::CABS.reject { |c| c[:id] == @cab[:id] }.first(6).each do |other| %>
+      <%= link_to cab_path(other[:id]),
+            class: "group block p-3 transition-all duration-200",
+            style: "border: 1px solid #1a1208; background: #0f0c08;" do %>
+        <p class="text-[9px] tracking-widest mb-1 truncate" style="color: #3a2410;"><%= other[:size] %></p>
+        <p class="text-xs truncate" style="color: #5a3820;" ><%= other[:name].upcase %></p>
+        <p class="text-xs font-bold mt-2" style="color: #c07838;">$<%= number_with_delimiter(other[:price]) %></p>
+      <% end %>
+    <% end %>
+  </div>
+</div>

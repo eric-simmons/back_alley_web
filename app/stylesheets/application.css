@@ -1,3 +1,105 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ── Steampunk Keyframes ─────────────────────────────── */
+
+@keyframes gear-cw  { to { transform: rotate(360deg);  } }
+@keyframes gear-ccw { to { transform: rotate(-360deg); } }
+
+@keyframes steam-rise {
+  0%   { opacity: 0;   transform: translateY(0)     scaleX(1);   }
+  25%  { opacity: 0.5; transform: translateY(-15px) scaleX(1.1); }
+  100% { opacity: 0;   transform: translateY(-60px) scaleX(2);   }
+}
+
+@keyframes flicker {
+  0%, 88%, 92%, 95%, 100% { opacity: 1;   }
+  89%, 93%, 96%            { opacity: 0.5; }
+}
+
+@keyframes copper-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1;   }
+}
+
+@keyframes needle-settle {
+  0%   { transform: rotate(-55deg); }
+  65%  { transform: rotate(4deg);   }
+  80%  { transform: rotate(-2deg);  }
+  90%  { transform: rotate(1deg);   }
+  100% { transform: rotate(0deg);   }
+}
+
+@keyframes scanline {
+  0%   { top: -4px; }
+  100% { top: 100%; }
+}
+
+/* ── Animation Utility Classes ───────────────────────── */
+
+.animate-gear-cw      { animation: gear-cw  linear infinite; }
+.animate-gear-ccw     { animation: gear-ccw linear infinite; }
+.animate-steam        { animation: steam-rise ease-out infinite; }
+.animate-flicker      { animation: flicker 9s step-end infinite; }
+.animate-copper-pulse { animation: copper-pulse 3s ease-in-out infinite; }
+.animate-needle       { animation: needle-settle 1.8s cubic-bezier(0.2, 0.8, 0.3, 1) forwards; }
+
+/* ── Steampunk Page Base ─────────────────────────────── */
+
+.sp-page {
+  background-color: #0c0a07;
+  color: #c8b898;
+  background-image:
+    linear-gradient(rgba(180, 150, 100, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180, 150, 100, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  min-height: 100vh;
+}
+
+/* ── Rivet dot ───────────────────────────────────────── */
+
+.rivet {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2a1e10;
+  border: 1px solid #4a3220;
+  z-index: 10;
+}
+
+/* ── Cab card staggered rotations ────────────────────── */
+
+.cab-card:nth-child(4n+1) { transform: rotate(-0.45deg); }
+.cab-card:nth-child(4n+2) { transform: rotate(0.3deg);   }
+.cab-card:nth-child(4n+3) { transform: rotate(-0.25deg); }
+.cab-card:nth-child(4n+4) { transform: rotate(0.4deg);   }
+
+.cab-card {
+  transition: transform 0.35s cubic-bezier(0.2, 0, 0.25, 1),
+              box-shadow 0.35s ease,
+              border-color 0.35s ease;
+}
+
+.cab-card:hover {
+  transform: rotate(0deg) translateY(-5px) !important;
+  box-shadow: 0 0 28px rgba(192, 120, 56, 0.22), 0 8px 32px rgba(0,0,0,0.6);
+  border-color: #7a4a28 !important;
+}
+
+/* ── Scanline effect for show page ──────────────────── */
+
+.scanline-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.scanline-wrap::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(transparent, rgba(192,120,56,0.06), transparent);
+  animation: scanline 6s linear infinite;
+  pointer-events: none;
+}

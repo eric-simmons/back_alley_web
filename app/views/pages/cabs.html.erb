@@ -1,97 +1,130 @@
-<% content_for :body_class do %>bg-neutral-950 text-white<% end %>
-<% content_for :main_class do %>max-w-screen-xl mx-auto px-8 py-16<% end %>
+<% content_for :body_class do %>sp-page font-mono<% end %>
+<% content_for :main_class do %>max-w-screen-xl mx-auto px-8 py-14<% end %>
+<% content_for :footer_class do %>font-mono border-amber-950 tracking-widest<% end %>
+<% content_for :footer_class do %><style>footer { color: #4a3220; border-color: #2a1a0c; }</style><% end %>
 
-<%
-  cabs = [
-    { name: "Marshall 1960A",    size: "4×12", wood: "Birch Plywood",    finish: "Black Tolex",      year: 1974, price: 1800 },
-    { name: "Fender Bandmaster", size: "2×12", wood: "Pine",             finish: "Brown Tolex",      year: 1965, price: 2200 },
-    { name: "Orange PPC412",     size: "4×12", wood: "Birch Plywood",    finish: "Orange Vinyl",     year: 2018, price: 900  },
-    { name: "Mesa Boogie 112",   size: "1×12", wood: "Baltic Birch",     finish: "Black Vinyl",      year: 2015, price: 650  },
-    { name: "Custom Tweed",      size: "2×10", wood: "Pine",             finish: "Blonde Tweed",     year: 1961, price: 3100 },
-    { name: "Vox AC30 Cab",      size: "2×12", wood: "Baltic Birch",     finish: "Brown Diamond",    year: 1963, price: 4500 },
-    { name: "Peavey 412MS",      size: "4×12", wood: "Particle Board",   finish: "Silver Grill",     year: 1988, price: 400  },
-    { name: "Bogner Uberkab",    size: "2×12", wood: "Void-Free Birch",  finish: "Vintage Brown",    year: 2005, price: 1100 },
-    { name: "Hiwatt SE4123",     size: "4×12", wood: "Birch Plywood",    finish: "Black Rexine",     year: 1971, price: 3800 },
-    { name: "Dumble 1×15",       size: "1×15", wood: "Baltic Birch",     finish: "Natural Oak",      year: 1979, price: 6200 },
-    { name: "Sunn 200S",         size: "2×15", wood: "Void-Free Birch",  finish: "Silver Sparkle",   year: 1969, price: 2800 },
-    { name: "Soldano 4×12",      size: "4×12", wood: "Birch Plywood",    finish: "Burgundy Tolex",   year: 1993, price: 1500 },
-  ]
-%>
+<%# ── Page Header ─────────────────────────────────────── %>
+<div class="mb-14 relative">
 
-<%# Page header %>
-<div class="mb-12">
-  <p class="text-amber-500 text-xs tracking-widest uppercase font-medium mb-3">Marketplace</p>
-  <div class="flex items-end justify-between gap-4">
+  <%# Decorative large background gear — barely visible %>
+  <div class="absolute -top-8 -right-4 text-[180px] leading-none select-none pointer-events-none animate-gear-ccw opacity-[0.03]" style="animation-duration: 80s; color: #c07838;">⚙</div>
+
+  <%# Title block %>
+  <div class="flex items-center gap-5 mb-4">
+    <span class="animate-gear-cw text-2xl select-none" style="animation-duration: 22s; color: #5a3a20; display:inline-block;">⚙</span>
     <div>
-      <h1 class="text-5xl font-bold tracking-tight leading-none">Cabs</h1>
-      <p class="mt-3 text-neutral-500 text-base">Vintage &amp; boutique speaker cabinets, hand-selected.</p>
+      <p class="text-xs tracking-[0.4em] uppercase mb-1" style="color: #5a3820;">Back Alley Studio · Catalog</p>
+      <h1 class="text-5xl font-bold tracking-tight leading-none" style="color: #c8a870;">Cabinet<br><span class="text-6xl" style="color: #c07838;">Catalog</span></h1>
     </div>
-    <span class="text-neutral-600 text-sm pb-1 shrink-0"><%= cabs.length %> listings</span>
+    <span class="animate-gear-ccw text-xl select-none ml-auto self-end mb-2" style="animation-duration: 14s; color: #5a3a20; display:inline-block;">⚙</span>
   </div>
-  <div class="mt-8 h-px bg-neutral-800"></div>
+
+  <%# Ruled separator %>
+  <div class="flex items-center gap-3 mt-6">
+    <div class="h-px flex-1" style="background: linear-gradient(to right, #c07838, #4a2a10, transparent);"></div>
+    <span class="text-xs tracking-[0.3em]" style="color: #5a3820;">── <%= @cabs.length %> UNITS AVAILABLE ──</span>
+    <div class="h-px flex-1" style="background: linear-gradient(to left, #c07838, #4a2a10, transparent);"></div>
+  </div>
 </div>
 
-<%# Filter pills - UI display %>
+<%# ── Filter Bar ──────────────────────────────────────── %>
 <div class="flex items-center gap-2 mb-10 flex-wrap">
-  <% ["All", "Vintage", "Modern", "1×12", "2×12", "4×12"].each_with_index do |filter, i| %>
-    <button class="<%= i == 0 ? 'bg-white text-neutral-950 font-semibold' : 'border border-neutral-800 text-neutral-500 hover:border-neutral-600 hover:text-white' %> text-xs px-4 py-1.5 rounded-full tracking-wide transition-colors duration-200">
-      <%= filter %>
+  <% ["ALL", "VINTAGE", "MODERN", "1×12", "2×12", "4×12"].each_with_index do |f, i| %>
+    <button class="text-xs px-4 py-1.5 tracking-widest border transition-colors duration-200"
+            style="<%= i == 0 ? 'background:#1e1408; border-color:#c07838; color:#c8a060;' : 'background:transparent; border-color:#2a1e10; color:#5a3820;' %>">
+      <%= f %>
     </button>
   <% end %>
+  <span class="ml-auto text-xs tracking-widest" style="color: #3a2810;">[ SORT: YEAR ↓ ]</span>
 </div>
 
-<%# Cabs grid %>
-<div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-  <% cabs.each do |cab| %>
-    <div class="group relative aspect-square bg-neutral-900 rounded-2xl overflow-hidden cursor-pointer border border-neutral-800 hover:border-neutral-700 transition-all duration-300 hover:shadow-2xl hover:shadow-black/70 hover:-translate-y-1">
+<%# ── Cab Grid ─────────────────────────────────────────── %>
+<div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+  <% @cabs.each do |cab| %>
+    <%= link_to cab_path(cab[:id]), class: "cab-card group relative aspect-square block overflow-visible", style: "border: 1px solid #2a1a0c;" do %>
 
-      <%# Subtle inner gradient %>
-      <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+      <%# Rivet corners %>
+      <div class="rivet" style="top:8px; left:8px;"></div>
+      <div class="rivet" style="top:8px; right:8px;"></div>
+      <div class="rivet" style="bottom:8px; left:8px;"></div>
+      <div class="rivet" style="bottom:8px; right:8px;"></div>
 
-      <%# Placeholder visual — speaker icon + label %>
-      <div class="relative h-full flex flex-col items-center justify-center gap-4 p-8 z-10">
-        <div class="text-neutral-800 group-hover:text-neutral-700 transition-colors duration-500">
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="28" cy="28" r="26" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="28" cy="28" r="18" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="28" cy="28" r="10" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="28" cy="28" r="4" fill="currentColor"/>
-          </svg>
+      <%# Card body %>
+      <div class="absolute inset-0 overflow-hidden" style="background: linear-gradient(145deg, #181208 0%, #0c0a07 100%);">
+
+        <%# Faint amber inner border %>
+        <div class="absolute inset-2" style="border: 1px solid #1e1408; pointer-events:none;"></div>
+
+        <%# Placeholder visual: speaker diagram %>
+        <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 p-8">
+          <div class="animate-copper-pulse" style="color: #3a2818;">
+            <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="36" cy="36" r="33" stroke="currentColor" stroke-width="1.2"/>
+              <circle cx="36" cy="36" r="23" stroke="currentColor" stroke-width="1"/>
+              <circle cx="36" cy="36" r="14" stroke="currentColor" stroke-width="1"/>
+              <circle cx="36" cy="36" r="6"  stroke="currentColor" stroke-width="1.2"/>
+              <circle cx="36" cy="36" r="2.5" fill="currentColor"/>
+              <line x1="36" y1="3"  x2="36" y2="13" stroke="currentColor" stroke-width="0.8"/>
+              <line x1="36" y1="59" x2="36" y2="69" stroke="currentColor" stroke-width="0.8"/>
+              <line x1="3"  y1="36" x2="13" y2="36" stroke="currentColor" stroke-width="0.8"/>
+              <line x1="59" y1="36" x2="69" y2="36" stroke="currentColor" stroke-width="0.8"/>
+            </svg>
+          </div>
+          <div class="text-center">
+            <p class="text-sm tracking-[0.2em]" style="color: #4a3218;"><%= cab[:size] %></p>
+            <p class="text-xs mt-1 truncate max-w-full" style="color: #3a2412;"><%= cab[:name].upcase %></p>
+          </div>
         </div>
-        <div class="text-center">
-          <p class="text-neutral-700 font-mono text-sm tracking-widest"><%= cab[:size] %></p>
-          <p class="text-neutral-800 text-xs mt-1"><%= cab[:name] %></p>
-        </div>
-      </div>
 
-      <%# Hover info overlay — slides up from bottom %>
-      <div class="absolute inset-0 bg-neutral-950/97 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out z-20 flex flex-col justify-end p-5">
+        <%# Hover overlay — slides up ── steampunk panel %>
+        <div class="absolute inset-0 flex flex-col justify-end translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out"
+             style="background: rgba(10,8,5,0.97);">
 
-        <%# Amber accent line at top of overlay %>
-        <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/70 to-transparent"></div>
+          <%# Copper top border on overlay %>
+          <div class="absolute top-0 left-0 right-0 h-px" style="background: linear-gradient(to right, transparent, #c07838, transparent);"></div>
 
-        <%# Cab name %>
-        <p class="text-white font-semibold text-sm mb-4 truncate"><%= cab[:name] %></p>
+          <%# Steam particle (decorative) %>
+          <div class="absolute top-3 left-1/2 -translate-x-1/2 w-1 h-3 rounded-full animate-steam opacity-0 group-hover:opacity-100"
+               style="background: rgba(200,180,140,0.3); animation-duration: 2.4s; animation-delay: 0.2s;"></div>
+          <div class="absolute top-3 left-[45%] w-0.5 h-2 rounded-full animate-steam opacity-0 group-hover:opacity-100"
+               style="background: rgba(200,180,140,0.2); animation-duration: 3s; animation-delay: 0.6s;"></div>
 
-        <%# Specs table %>
-        <div class="space-y-2.5 mb-5">
-          <% { "Speaker" => cab[:size], "Wood" => cab[:wood], "Finish" => cab[:finish], "Year" => cab[:year].to_s }.each do |label, value| %>
-            <div class="flex items-center justify-between gap-2">
-              <span class="text-neutral-600 text-xs tracking-widest uppercase shrink-0"><%= label %></span>
-              <span class="text-neutral-200 text-xs font-medium text-right"><%= value %></span>
+          <div class="p-5">
+            <%# Cab name %>
+            <p class="text-xs tracking-widest mb-3 truncate animate-flicker" style="color: #c8a060;"><%= cab[:name].upcase %></p>
+
+            <%# Specs ─ monospace table %>
+            <div class="space-y-1.5 mb-4">
+              <% { "SPKR" => cab[:size], "WOOD" => cab[:wood].upcase, "FNSH" => cab[:finish].upcase, "YEAR" => cab[:year].to_s }.each do |label, val| %>
+                <div class="flex items-baseline justify-between gap-2">
+                  <span class="text-[10px] tracking-widest shrink-0" style="color: #4a3218;"><%= label %></span>
+                  <span class="text-[10px] flex-1 overflow-hidden" style="color: #2a1e10; letter-spacing:0.05em;">...............</span>
+                  <span class="text-xs font-bold shrink-0" style="color: #a07840;"><%= val %></span>
+                </div>
+              <% end %>
             </div>
-          <% end %>
-        </div>
 
-        <%# Price + CTA %>
-        <div class="border-t border-neutral-800 pt-4 flex items-center justify-between">
-          <span class="text-amber-400 text-xl font-bold tracking-tight">$<%= number_with_delimiter(cab[:price]) %></span>
-          <button class="bg-white text-neutral-950 text-xs font-bold tracking-wider uppercase px-4 py-2 rounded-full hover:bg-amber-400 transition-colors duration-200">
-            View
-          </button>
+            <%# Price + CTA %>
+            <div class="pt-3" style="border-top: 1px solid #2a1a0c;">
+              <div class="flex items-center justify-between">
+                <span class="text-lg font-bold" style="color: #c07838;">$<%= number_with_delimiter(cab[:price]) %></span>
+                <span class="text-[10px] tracking-widest px-3 py-1.5 border transition-colors"
+                      style="color: #c8a060; border-color: #5a3820;">
+                  VIEW →
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
-    </div>
+    <% end %>
   <% end %>
+</div>
+
+<%# ── Bottom decorative rule ─────────────────────────── %>
+<div class="flex items-center gap-4 mt-16">
+  <div class="h-px flex-1" style="background: linear-gradient(to right, transparent, #2a1a0c);"></div>
+  <span class="text-xs tracking-[0.4em]" style="color: #3a2410;">⚙ END OF CATALOG ⚙</span>
+  <div class="h-px flex-1" style="background: linear-gradient(to left, transparent, #2a1a0c);"></div>
 </div>
