@@ -34,7 +34,7 @@
       <%= yield %>
     </main>
 
-    <footer class="text-center p-6 text-sm border-t mt-12 <%= content_for?(:footer_class) ? yield(:footer_class) : 'text-gray-500 border-gray-200' %>">
+    <footer class="text-center p-6 text-sm border-t <%= content_for?(:footer_class) ? yield(:footer_class) : 'mt-12 text-gray-500 border-gray-200' %>">
       © <%= Date.today.year %> Back Alley Studio
     </footer>
   </body>

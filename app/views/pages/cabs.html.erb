@@ -1,92 +1,103 @@
-<% content_for :body_class do %>sp-page font-mono<% end %>
-<% content_for :main_class do %>max-w-screen-xl mx-auto px-8 py-14<% end %>
-<% content_for :footer_class do %><style>footer { color: #4a3220; border-color: #2a1a0c; }</style><% end %>
+<% content_for :body_class do %>bg-black<% end %>
+<% content_for :main_class do %>p-0<% end %>
+<% content_for :footer_class do %>text-white/20 border-white/10 mt-0<% end %>
 
-<%# ── Page Header ─────────────────────────────────────── %>
-<div class="mb-12">
-  <div class="flex items-center gap-5 mb-6">
-    <span class="animate-gear-cw text-2xl select-none" style="animation-duration: 22s; color: #5a3a20; display:inline-block;">⚙</span>
-    <div>
-      <p class="text-xs tracking-[0.4em] uppercase mb-1" style="color: #5a3820;">Back Alley Studio · Catalog</p>
-      <h1 class="text-5xl font-bold tracking-tight leading-none" style="color: #c8a870;">Cabinet<br><span class="text-6xl" style="color: #c07838;">Catalog</span></h1>
-    </div>
-    <span class="animate-gear-ccw text-xl select-none ml-auto self-end mb-2" style="animation-duration: 14s; color: #5a3a20; display:inline-block;">⚙</span>
-  </div>
-  <div class="h-px" style="background: linear-gradient(to right, #c07838, #4a2a10, transparent);"></div>
+<%# ── Thin page header ────────────────────────────────── %>
+<div class="flex items-center justify-between px-5 py-3 border-b border-white/10">
+  <p class="text-[10px] tracking-[0.4em] text-white/30 uppercase">Cabinet Catalog</p>
+  <p class="text-[10px] tracking-[0.4em] text-white/20"><%= @cabs.length %> pieces</p>
 </div>
 
-<%# ── Cab Grid ─────────────────────────────────────────── %>
-<div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-  <% @cabs.each do |cab| %>
-    <div class="cab-card relative" style="border: 1px solid #2a1a0c;">
+<%# ── Editorial grid ──────────────────────────────────── %>
+<%
+  # Explicit grid position for each of the 12 cabs
+  # [grid-column, grid-row]
+  placements = [
+    ["1 / 3", "1 / 3"],  # 0: 2×2 large
+    ["3 / 4", "1 / 2"],  # 1: 1×1
+    ["4 / 5", "1 / 2"],  # 2: 1×1
+    ["3 / 4", "2 / 3"],  # 3: 1×1
+    ["4 / 5", "2 / 3"],  # 4: 1×1
+    ["1 / 2", "3 / 5"],  # 5: 1×2 tall
+    ["2 / 4", "3 / 4"],  # 6: 2×1 wide
+    ["4 / 5", "3 / 5"],  # 7: 1×2 tall
+    ["2 / 3", "4 / 5"],  # 8: 1×1
+    ["3 / 4", "4 / 5"],  # 9: 1×1
+    ["1 / 3", "5 / 6"],  # 10: 2×1 wide
+    ["3 / 5", "5 / 6"],  # 11: 2×1 wide
+  ]
 
-      <%# Rivet corners %>
-      <div class="rivet" style="top:8px; left:8px;"></div>
-      <div class="rivet" style="top:8px; right:8px;"></div>
-      <div class="rivet" style="bottom:8px; left:8px;"></div>
-      <div class="rivet" style="bottom:8px; right:8px;"></div>
+  # Subtle warm-dark background tints per card
+  bgs = %w[
+    #0f0e0c #111110 #100f0d #0e0e0e #110f0d
+    #0f0d0b #101010 #0e0f0c #110e0d #0f0f0f
+    #100d0b #0f0e0d
+  ]
+%>
 
-      <%# Card body %>
-      <div class="overflow-hidden" style="background: linear-gradient(145deg, #181208 0%, #0c0a07 100%);">
+<div style="
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 25vw);
+  gap: 3px;
+  background: #000;
+">
+  <% @cabs.each_with_index do |cab, i| %>
+    <% col, row = placements[i] %>
+    <div class="group relative overflow-hidden"
+         style="grid-column: <%= col %>; grid-row: <%= row %>; background: <%= bgs[i] %>;">
 
-        <%# Speaker diagram %>
-        <div class="flex flex-col items-center justify-center gap-3 pt-8 pb-5 px-6">
-          <div class="animate-copper-pulse" style="color: #3a2818;">
-            <svg width="60" height="60" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="36" cy="36" r="33" stroke="currentColor" stroke-width="1.2"/>
-              <circle cx="36" cy="36" r="23" stroke="currentColor" stroke-width="1"/>
-              <circle cx="36" cy="36" r="14" stroke="currentColor" stroke-width="1"/>
-              <circle cx="36" cy="36" r="6"  stroke="currentColor" stroke-width="1.2"/>
-              <circle cx="36" cy="36" r="2.5" fill="currentColor"/>
-              <line x1="36" y1="3"  x2="36" y2="13" stroke="currentColor" stroke-width="0.8"/>
-              <line x1="36" y1="59" x2="36" y2="69" stroke="currentColor" stroke-width="0.8"/>
-              <line x1="3"  y1="36" x2="13" y2="36" stroke="currentColor" stroke-width="0.8"/>
-              <line x1="59" y1="36" x2="69" y2="36" stroke="currentColor" stroke-width="0.8"/>
-            </svg>
-          </div>
-          <div class="text-center">
-            <p class="text-xs tracking-[0.25em] font-bold" style="color: #c8a060;"><%= cab[:name].upcase %></p>
-            <p class="text-[10px] tracking-widest mt-1" style="color: #4a3218;"><%= cab[:size] %> · <%= cab[:year] %></p>
-          </div>
-        </div>
+      <%# Full-card link sits beneath everything %>
+      <%= link_to cab_path(cab[:id]), class: "absolute inset-0 z-0", aria: { label: cab[:name] } %>
 
-        <%# Specs %>
-        <div class="px-5 pb-4 space-y-1">
-          <% { "WOOD" => cab[:wood].upcase, "FINISH" => cab[:finish].upcase, "COND" => cab[:condition].upcase }.each do |label, val| %>
-            <div class="flex items-baseline justify-between gap-2">
-              <span class="text-[9px] tracking-widest shrink-0" style="color: #4a3218;"><%= label %></span>
-              <span class="text-[9px] flex-1 overflow-hidden" style="color: #2a1e10;">...............</span>
-              <span class="text-[10px] font-bold shrink-0" style="color: #7a4a20;"><%= val %></span>
-            </div>
+      <%# Ghost year text in background %>
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+        <span class="font-black text-white leading-none" style="font-size: clamp(3rem, 12vw, 14rem); opacity: 0.025;"><%= cab[:year] %></span>
+      </div>
+
+      <%# Speaker SVG — faint center icon %>
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none"
+           style="color: rgba(255,255,255,0.05);">
+        <svg viewBox="0 0 72 72" fill="none" style="width: min(45%, 140px); height: min(45%, 140px);">
+          <circle cx="36" cy="36" r="33" stroke="currentColor" stroke-width="0.8"/>
+          <circle cx="36" cy="36" r="23" stroke="currentColor" stroke-width="0.6"/>
+          <circle cx="36" cy="36" r="14" stroke="currentColor" stroke-width="0.6"/>
+          <circle cx="36" cy="36" r="6"  stroke="currentColor" stroke-width="0.8"/>
+          <circle cx="36" cy="36" r="2.5" fill="currentColor"/>
+          <line x1="36" y1="3"  x2="36" y2="13" stroke="currentColor" stroke-width="0.5"/>
+          <line x1="36" y1="59" x2="36" y2="69" stroke="currentColor" stroke-width="0.5"/>
+          <line x1="3"  y1="36" x2="13" y2="36" stroke="currentColor" stroke-width="0.5"/>
+          <line x1="59" y1="36" x2="69" y2="36" stroke="currentColor" stroke-width="0.5"/>
+        </svg>
+      </div>
+
+      <%# Default label — bottom left, always visible %>
+      <div class="absolute bottom-0 left-0 right-0 p-4 z-10 pointer-events-none
+                  translate-y-0 group-hover:translate-y-full transition-transform duration-300 ease-in-out">
+        <p class="text-[9px] tracking-[0.3em] text-white/25 uppercase mb-1"><%= cab[:size] %> · <%= cab[:year] %></p>
+        <p class="text-xs font-bold text-white/50 uppercase tracking-wide leading-tight"><%= cab[:name] %></p>
+      </div>
+
+      <%# Hover overlay — slides up from bottom %>
+      <div class="absolute inset-0 z-10 flex flex-col justify-end p-5
+                  translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out"
+           style="background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);">
+
+        <p class="text-[9px] tracking-[0.35em] text-white/35 uppercase mb-2"><%= cab[:size] %> · <%= cab[:finish] %> · <%= cab[:condition] %></p>
+        <p class="font-black text-white uppercase leading-none mb-3" style="font-size: clamp(0.85rem, 1.8vw, 1.4rem); letter-spacing: 0.04em;"><%= cab[:name] %></p>
+        <p class="text-2xl font-black text-amber-400 mb-4">$<%= number_with_delimiter(cab[:price]) %></p>
+
+        <div class="flex gap-2 relative z-20">
+          <%= link_to "VIEW →", cab_path(cab[:id]),
+                class: "text-[9px] tracking-widest border border-white/20 px-3 py-2 text-white/60 hover:text-white hover:border-white/50 transition-colors" %>
+          <%= form_with url: cart_add_path, method: :post, local: true do |f| %>
+            <%= f.hidden_field :cab_id, value: cab[:id] %>
+            <%= f.submit "+ CART",
+                  class: "text-[9px] tracking-widest bg-amber-400 hover:bg-amber-300 text-black font-bold px-3 py-2 cursor-pointer transition-colors" %>
           <% end %>
-        </div>
-
-        <%# Price + actions %>
-        <div class="px-5 pb-5 pt-3" style="border-top: 1px solid #1e1408;">
-          <p class="text-lg font-bold mb-3" style="color: #c07838;">$<%= number_with_delimiter(cab[:price]) %></p>
-          <div class="flex gap-2">
-            <%= link_to cab_path(cab[:id]),
-                  class: "flex-1 text-center text-[9px] tracking-widest py-1.5 transition-colors",
-                  style: "border: 1px solid #2a1e10; color: #5a3820;" do %>
-              VIEW →
-            <% end %>
-            <%= form_with url: cart_add_path, method: :post, local: true, style: "flex:1;" do |f| %>
-              <%= f.hidden_field :cab_id, value: cab[:id] %>
-              <%= f.submit "＋ CART",
-                    class: "w-full text-[9px] tracking-widest py-1.5 cursor-pointer transition-colors hover:brightness-125",
-                    style: "border: 1px solid #5a3820; color: #c8a060; background: #1a1005;" %>
-            <% end %>
-          </div>
         </div>
 
       </div>
     </div>
   <% end %>
-</div>
-
-<%# ── Bottom rule ─────────────────────────────────────── %>
-<div class="flex items-center gap-4 mt-16">
-  <div class="h-px flex-1" style="background: linear-gradient(to right, transparent, #2a1a0c);"></div>
-  <span class="text-xs tracking-[0.4em]" style="color: #3a2410;">⚙ END OF CATALOG ⚙</span>
-  <div class="h-px flex-1" style="background: linear-gradient(to left, transparent, #2a1a0c);"></div>
 </div>
