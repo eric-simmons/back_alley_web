@@ -1,16 +1,10 @@
 <% content_for :body_class do %>sp-page font-mono<% end %>
 <% content_for :main_class do %>max-w-screen-xl mx-auto px-8 py-14<% end %>
-<% content_for :footer_class do %>font-mono border-amber-950 tracking-widest<% end %>
 <% content_for :footer_class do %><style>footer { color: #4a3220; border-color: #2a1a0c; }</style><% end %>
 
 <%# ── Page Header ─────────────────────────────────────── %>
-<div class="mb-14 relative">
-
-  <%# Decorative large background gear — barely visible %>
-  <div class="absolute -top-8 -right-4 text-[180px] leading-none select-none pointer-events-none animate-gear-ccw opacity-[0.03]" style="animation-duration: 80s; color: #c07838;">⚙</div>
-
-  <%# Title block %>
-  <div class="flex items-center gap-5 mb-4">
+<div class="mb-12">
+  <div class="flex items-center gap-5 mb-6">
     <span class="animate-gear-cw text-2xl select-none" style="animation-duration: 22s; color: #5a3a20; display:inline-block;">⚙</span>
     <div>
       <p class="text-xs tracking-[0.4em] uppercase mb-1" style="color: #5a3820;">Back Alley Studio · Catalog</p>
@@ -18,30 +12,13 @@
     </div>
     <span class="animate-gear-ccw text-xl select-none ml-auto self-end mb-2" style="animation-duration: 14s; color: #5a3a20; display:inline-block;">⚙</span>
   </div>
-
-  <%# Ruled separator %>
-  <div class="flex items-center gap-3 mt-6">
-    <div class="h-px flex-1" style="background: linear-gradient(to right, #c07838, #4a2a10, transparent);"></div>
-    <span class="text-xs tracking-[0.3em]" style="color: #5a3820;">── <%= @cabs.length %> UNITS AVAILABLE ──</span>
-    <div class="h-px flex-1" style="background: linear-gradient(to left, #c07838, #4a2a10, transparent);"></div>
-  </div>
-</div>
-
-<%# ── Filter Bar ──────────────────────────────────────── %>
-<div class="flex items-center gap-2 mb-10 flex-wrap">
-  <% ["ALL", "VINTAGE", "MODERN", "1×12", "2×12", "4×12"].each_with_index do |f, i| %>
-    <button class="text-xs px-4 py-1.5 tracking-widest border transition-colors duration-200"
-            style="<%= i == 0 ? 'background:#1e1408; border-color:#c07838; color:#c8a060;' : 'background:transparent; border-color:#2a1e10; color:#5a3820;' %>">
-      <%= f %>
-    </button>
-  <% end %>
-  <span class="ml-auto text-xs tracking-widest" style="color: #3a2810;">[ SORT: YEAR ↓ ]</span>
+  <div class="h-px" style="background: linear-gradient(to right, #c07838, #4a2a10, transparent);"></div>
 </div>
 
 <%# ── Cab Grid ─────────────────────────────────────────── %>
 <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
   <% @cabs.each do |cab| %>
-    <%= link_to cab_path(cab[:id]), class: "cab-card group relative aspect-square block overflow-visible", style: "border: 1px solid #2a1a0c;" do %>
+    <div class="cab-card relative" style="border: 1px solid #2a1a0c;">
 
       <%# Rivet corners %>
       <div class="rivet" style="top:8px; left:8px;"></div>
@@ -50,15 +27,12 @@
       <div class="rivet" style="bottom:8px; right:8px;"></div>
 
       <%# Card body %>
-      <div class="absolute inset-0 overflow-hidden" style="background: linear-gradient(145deg, #181208 0%, #0c0a07 100%);">
+      <div class="overflow-hidden" style="background: linear-gradient(145deg, #181208 0%, #0c0a07 100%);">
 
-        <%# Faint amber inner border %>
-        <div class="absolute inset-2" style="border: 1px solid #1e1408; pointer-events:none;"></div>
-
-        <%# Placeholder visual: speaker diagram %>
-        <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 p-8">
+        <%# Speaker diagram %>
+        <div class="flex flex-col items-center justify-center gap-3 pt-8 pb-5 px-6">
           <div class="animate-copper-pulse" style="color: #3a2818;">
-            <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="60" height="60" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="36" cy="36" r="33" stroke="currentColor" stroke-width="1.2"/>
               <circle cx="36" cy="36" r="23" stroke="currentColor" stroke-width="1"/>
               <circle cx="36" cy="36" r="14" stroke="currentColor" stroke-width="1"/>
@@ -71,58 +45,46 @@
             </svg>
           </div>
           <div class="text-center">
-            <p class="text-sm tracking-[0.2em]" style="color: #4a3218;"><%= cab[:size] %></p>
-            <p class="text-xs mt-1 truncate max-w-full" style="color: #3a2412;"><%= cab[:name].upcase %></p>
+            <p class="text-xs tracking-[0.25em] font-bold" style="color: #c8a060;"><%= cab[:name].upcase %></p>
+            <p class="text-[10px] tracking-widest mt-1" style="color: #4a3218;"><%= cab[:size] %> · <%= cab[:year] %></p>
           </div>
         </div>
 
-        <%# Hover overlay — slides up ── steampunk panel %>
-        <div class="absolute inset-0 flex flex-col justify-end translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out"
-             style="background: rgba(10,8,5,0.97);">
-
-          <%# Copper top border on overlay %>
-          <div class="absolute top-0 left-0 right-0 h-px" style="background: linear-gradient(to right, transparent, #c07838, transparent);"></div>
-
-          <%# Steam particle (decorative) %>
-          <div class="absolute top-3 left-1/2 -translate-x-1/2 w-1 h-3 rounded-full animate-steam opacity-0 group-hover:opacity-100"
-               style="background: rgba(200,180,140,0.3); animation-duration: 2.4s; animation-delay: 0.2s;"></div>
-          <div class="absolute top-3 left-[45%] w-0.5 h-2 rounded-full animate-steam opacity-0 group-hover:opacity-100"
-               style="background: rgba(200,180,140,0.2); animation-duration: 3s; animation-delay: 0.6s;"></div>
-
-          <div class="p-5">
-            <%# Cab name %>
-            <p class="text-xs tracking-widest mb-3 truncate animate-flicker" style="color: #c8a060;"><%= cab[:name].upcase %></p>
-
-            <%# Specs ─ monospace table %>
-            <div class="space-y-1.5 mb-4">
-              <% { "SPKR" => cab[:size], "WOOD" => cab[:wood].upcase, "FNSH" => cab[:finish].upcase, "YEAR" => cab[:year].to_s }.each do |label, val| %>
-                <div class="flex items-baseline justify-between gap-2">
-                  <span class="text-[10px] tracking-widest shrink-0" style="color: #4a3218;"><%= label %></span>
-                  <span class="text-[10px] flex-1 overflow-hidden" style="color: #2a1e10; letter-spacing:0.05em;">...............</span>
-                  <span class="text-xs font-bold shrink-0" style="color: #a07840;"><%= val %></span>
-                </div>
-              <% end %>
+        <%# Specs %>
+        <div class="px-5 pb-4 space-y-1">
+          <% { "WOOD" => cab[:wood].upcase, "FINISH" => cab[:finish].upcase, "COND" => cab[:condition].upcase }.each do |label, val| %>
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="text-[9px] tracking-widest shrink-0" style="color: #4a3218;"><%= label %></span>
+              <span class="text-[9px] flex-1 overflow-hidden" style="color: #2a1e10;">...............</span>
+              <span class="text-[10px] font-bold shrink-0" style="color: #7a4a20;"><%= val %></span>
             </div>
+          <% end %>
+        </div>
 
-            <%# Price + CTA %>
-            <div class="pt-3" style="border-top: 1px solid #2a1a0c;">
-              <div class="flex items-center justify-between">
-                <span class="text-lg font-bold" style="color: #c07838;">$<%= number_with_delimiter(cab[:price]) %></span>
-                <span class="text-[10px] tracking-widest px-3 py-1.5 border transition-colors"
-                      style="color: #c8a060; border-color: #5a3820;">
-                  VIEW →
-                </span>
-              </div>
-            </div>
+        <%# Price + actions %>
+        <div class="px-5 pb-5 pt-3" style="border-top: 1px solid #1e1408;">
+          <p class="text-lg font-bold mb-3" style="color: #c07838;">$<%= number_with_delimiter(cab[:price]) %></p>
+          <div class="flex gap-2">
+            <%= link_to cab_path(cab[:id]),
+                  class: "flex-1 text-center text-[9px] tracking-widest py-1.5 transition-colors",
+                  style: "border: 1px solid #2a1e10; color: #5a3820;" do %>
+              VIEW →
+            <% end %>
+            <%= form_with url: cart_add_path, method: :post, local: true, style: "flex:1;" do |f| %>
+              <%= f.hidden_field :cab_id, value: cab[:id] %>
+              <%= f.submit "＋ CART",
+                    class: "w-full text-[9px] tracking-widest py-1.5 cursor-pointer transition-colors hover:brightness-125",
+                    style: "border: 1px solid #5a3820; color: #c8a060; background: #1a1005;" %>
+            <% end %>
           </div>
         </div>
 
       </div>
-    <% end %>
+    </div>
   <% end %>
 </div>
 
-<%# ── Bottom decorative rule ─────────────────────────── %>
+<%# ── Bottom rule ─────────────────────────────────────── %>
 <div class="flex items-center gap-4 mt-16">
   <div class="h-px flex-1" style="background: linear-gradient(to right, transparent, #2a1a0c);"></div>
   <span class="text-xs tracking-[0.4em]" style="color: #3a2410;">⚙ END OF CATALOG ⚙</span>

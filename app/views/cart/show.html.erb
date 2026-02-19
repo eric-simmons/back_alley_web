@@ -1,0 +1,125 @@
+<% content_for :body_class do %>sp-page font-mono<% end %>
+<% content_for :main_class do %>max-w-screen-xl mx-auto px-8 py-14<% end %>
+<% content_for :footer_class do %><style>footer { color: #4a3220; border-color: #2a1a0c; }</style><% end %>
+
+<%# ── Page Header ─────────────────────────────────────── %>
+<div class="mb-12">
+  <div class="flex items-center gap-5 mb-6">
+    <span class="animate-gear-cw text-2xl select-none" style="animation-duration: 22s; color: #5a3a20; display:inline-block;">⚙</span>
+    <div>
+      <p class="text-xs tracking-[0.4em] uppercase mb-1" style="color: #5a3820;">Back Alley Studio</p>
+      <h1 class="text-5xl font-bold tracking-tight leading-none" style="color: #c8a870;">Your<br><span class="text-6xl" style="color: #c07838;">Cart</span></h1>
+    </div>
+    <span class="ml-auto self-end mb-2">
+      <%= link_to "← BACK TO CATALOG", cabs_path, class: "text-xs tracking-widest px-4 py-2 transition-colors hover:brightness-125", style: "border: 1px solid #2a1e10; color: #5a3820;" %>
+    </span>
+  </div>
+  <div class="h-px" style="background: linear-gradient(to right, #c07838, #4a2a10, transparent);"></div>
+</div>
+
+<% if @cart_items.empty? %>
+  <%# Empty state %>
+  <div class="text-center py-24">
+    <div class="animate-copper-pulse mb-6" style="color: #2a1e10;">
+      <svg class="mx-auto" width="64" height="64" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="36" cy="36" r="33" stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="36" cy="36" r="23" stroke="currentColor" stroke-width="1"/>
+        <circle cx="36" cy="36" r="14" stroke="currentColor" stroke-width="1"/>
+        <circle cx="36" cy="36" r="6"  stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="36" cy="36" r="2.5" fill="currentColor"/>
+      </svg>
+    </div>
+    <p class="text-xs tracking-[0.4em] mb-6" style="color: #3a2410;">── NO CABINETS SELECTED ──</p>
+    <%= link_to "BROWSE THE CATALOG →", cabs_path, class: "text-xs tracking-widest px-6 py-3 transition-colors hover:brightness-125", style: "border: 1px solid #5a3820; color: #c8a060; background: #1a1005;" %>
+  </div>
+
+<% else %>
+  <%# Cart items %>
+  <div class="space-y-4 mb-12">
+    <% @cart_items.each do |cab| %>
+      <div class="relative flex items-center gap-6 p-5" style="border: 1px solid #2a1a0c; background: linear-gradient(145deg, #181208 0%, #0c0a07 100%);">
+
+        <%# Corner rivets %>
+        <div class="rivet" style="top:8px; left:8px;"></div>
+        <div class="rivet" style="top:8px; right:8px;"></div>
+        <div class="rivet" style="bottom:8px; left:8px;"></div>
+        <div class="rivet" style="bottom:8px; right:8px;"></div>
+
+        <%# Speaker icon %>
+        <div class="shrink-0 animate-copper-pulse" style="color: #3a2818;">
+          <svg width="48" height="48" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="36" cy="36" r="33" stroke="currentColor" stroke-width="1.2"/>
+            <circle cx="36" cy="36" r="23" stroke="currentColor" stroke-width="1"/>
+            <circle cx="36" cy="36" r="14" stroke="currentColor" stroke-width="1"/>
+            <circle cx="36" cy="36" r="6"  stroke="currentColor" stroke-width="1.2"/>
+            <circle cx="36" cy="36" r="2.5" fill="currentColor"/>
+          </svg>
+        </div>
+
+        <%# Cab info %>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-bold tracking-[0.2em] mb-1" style="color: #c8a060;"><%= cab[:name].upcase %></p>
+          <div class="flex flex-wrap gap-4">
+            <span class="text-[10px] tracking-widest" style="color: #4a3218;"><%= cab[:size] %></span>
+            <span class="text-[10px] tracking-widest" style="color: #4a3218;"><%= cab[:year] %></span>
+            <span class="text-[10px] tracking-widest" style="color: #4a3218;"><%= cab[:condition].upcase %></span>
+            <span class="text-[10px] tracking-widest" style="color: #4a3218;"><%= cab[:finish].upcase %></span>
+          </div>
+        </div>
+
+        <%# Price %>
+        <div class="shrink-0 text-right">
+          <p class="text-xl font-bold" style="color: #c07838;">$<%= number_with_delimiter(cab[:price]) %></p>
+        </div>
+
+        <%# View link %>
+        <%= link_to cab_path(cab[:id]),
+              class: "shrink-0 text-[9px] tracking-widest px-3 py-2 transition-colors hover:brightness-125",
+              style: "border: 1px solid #2a1e10; color: #5a3820;" do %>
+          VIEW →
+        <% end %>
+
+        <%# Remove button %>
+        <%= form_with url: cart_remove_path, method: :delete, local: true do |f| %>
+          <%= f.hidden_field :cab_id, value: cab[:id] %>
+          <%= f.submit "✕ REMOVE",
+                class: "text-[9px] tracking-widest px-3 py-2 cursor-pointer transition-colors hover:brightness-125",
+                style: "border: 1px solid #3a1a10; color: #7a3020; background: transparent;" %>
+        <% end %>
+
+      </div>
+    <% end %>
+  </div>
+
+  <%# ── Summary panel ───────────────────────────────── %>
+  <div class="flex justify-end">
+    <div class="w-full max-w-sm p-6" style="border: 1px solid #4a2a10; background: linear-gradient(150deg, #1a1005, #0c0a07);">
+      <p class="text-[9px] tracking-[0.4em] mb-4" style="color: #4a3218;">ORDER SUMMARY</p>
+      <div class="h-px mb-5" style="background: linear-gradient(to right, transparent, #c07838, transparent);"></div>
+
+      <div class="space-y-2 mb-5">
+        <div class="flex justify-between">
+          <span class="text-xs tracking-widest" style="color: #5a3820;">ITEMS</span>
+          <span class="text-xs font-bold" style="color: #a07840;"><%= @cart_items.size %></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-xs tracking-widest" style="color: #5a3820;">TOTAL</span>
+          <span class="text-lg font-bold animate-flicker" style="color: #c07838;">$<%= number_with_delimiter(@total) %></span>
+        </div>
+      </div>
+
+      <div class="h-px mb-5" style="background: linear-gradient(to right, transparent, #c07838, transparent);"></div>
+      <button class="w-full py-3 text-xs tracking-[0.4em] uppercase transition-all duration-300 hover:brightness-125"
+              style="border: 1px solid #7a4a20; color: #c8a060; background: #1a1005;">
+        ── INQUIRE NOW ──
+      </button>
+    </div>
+  </div>
+<% end %>
+
+<%# ── Bottom rule ─────────────────────────────────────── %>
+<div class="flex items-center gap-4 mt-16">
+  <div class="h-px flex-1" style="background: linear-gradient(to right, transparent, #2a1a0c);"></div>
+  <span class="text-xs tracking-[0.4em]" style="color: #3a2410;">⚙ BACK ALLEY STUDIO ⚙</span>
+  <div class="h-px flex-1" style="background: linear-gradient(to left, transparent, #2a1a0c);"></div>
+</div>

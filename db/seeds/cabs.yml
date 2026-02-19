@@ -1,0 +1,131 @@
+- id: marshall-1960a
+  name: Marshall 1960A
+  size: "4×12"
+  wood: Birch Plywood
+  finish: Black Tolex
+  year: 1974
+  price: 1800
+  condition: Excellent
+  weight: 38 kg
+  desc: "A four-twelve from Marshall's golden era. Loaded with original Celestion G12M greenbacks, this cabinet delivers the iconic British crunch that defined hard rock and heavy metal."
+
+- id: fender-bandmaster
+  name: Fender Bandmaster
+  size: "2×12"
+  wood: Pine
+  finish: Brown Tolex
+  year: 1965
+  price: 2200
+  condition: Good
+  weight: 24 kg
+  desc: "Pre-CBS Fender cabinet with a pair of vintage Oxford 12K5 speakers. Warm, open, and unmistakably American in character."
+
+- id: orange-ppc412
+  name: Orange PPC412
+  size: "4×12"
+  wood: Birch Plywood
+  finish: Orange Vinyl
+  year: 2018
+  price: 900
+  condition: Excellent
+  weight: 40 kg
+  desc: "Modern Orange cabinet loaded with Celestion Vintage 30s. Big, bold, and punchy — the definitive rock four-twelve."
+
+- id: mesa-boogie-112
+  name: Mesa Boogie 112
+  size: "1×12"
+  wood: Baltic Birch
+  finish: Black Vinyl
+  year: 2015
+  price: 650
+  condition: Very Good
+  weight: 16 kg
+  desc: "Compact and punchy, this Boogie one-twelve handles everything from clean shimmer to searing lead tones with authority."
+
+- id: custom-tweed-210
+  name: "Custom Tweed 2×10"
+  size: "2×10"
+  wood: Pine
+  finish: Blonde Tweed
+  year: 1961
+  price: 3100
+  condition: Fair
+  weight: 18 kg
+  desc: "Handbuilt blonde tweed cabinet with original Jensen P10R alnico speakers. Punchy, jangly, and dripping with vintage character."
+
+- id: vox-ac30
+  name: Vox AC30 Cab
+  size: "2×12"
+  wood: Baltic Birch
+  finish: Brown Diamond
+  year: 1963
+  price: 4500
+  condition: Good
+  weight: 28 kg
+  desc: "The cabinet that powered the British Invasion. Original Celestion Blue alnico speakers intact, with that unmistakable chimey sparkle."
+
+- id: peavey-412ms
+  name: Peavey 412MS
+  size: "4×12"
+  wood: Particle Board
+  finish: Silver Grill
+  year: 1988
+  price: 400
+  condition: Fair
+  weight: 44 kg
+  desc: "Workhorse American four-twelve. Heavy and loud with Sheffield speakers — a survivor from the arena rock era."
+
+- id: bogner-uberkab
+  name: Bogner Uberkab
+  size: "2×12"
+  wood: Void-Free Birch
+  finish: Vintage Brown
+  year: 2005
+  price: 1100
+  condition: Excellent
+  weight: 26 kg
+  desc: "Boutique California two-twelve from Reinhold Bogner's workshop. Open-back design loaded with mixed Celestion speakers for complex, three-dimensional tone."
+
+- id: hiwatt-se4123
+  name: Hiwatt SE4123
+  size: "4×12"
+  wood: Birch Plywood
+  finish: Black Rexine
+  year: 1971
+  price: 3800
+  condition: Very Good
+  weight: 42 kg
+  desc: "British four-twelve from the Who era. Built like a tank with Fane Crescendo speakers — enormous clean headroom and brutal projection."
+
+- id: dumble-1x15
+  name: "Dumble 1×15"
+  size: "1×15"
+  wood: Baltic Birch
+  finish: Natural Oak
+  year: 1979
+  price: 6200
+  condition: Very Good
+  weight: 22 kg
+  desc: "One of fewer than a dozen surviving Dumble bass cabs. Natural oak finish with original JBL D140F speaker. A true unicorn."
+
+- id: sunn-200s
+  name: Sunn 200S
+  size: "2×15"
+  wood: Void-Free Birch
+  finish: Silver Sparkle
+  year: 1969
+  price: 2800
+  condition: Good
+  weight: 36 kg
+  desc: "Doom-laden Sunn two-fifteen in silver sparkle vinyl. Original Sunn-branded Altec Lansing 417s — the cabinet that launched a thousand drone records."
+
+- id: soldano-412
+  name: "Soldano 4×12"
+  size: "4×12"
+  wood: Birch Plywood
+  finish: Burgundy Tolex
+  year: 1993
+  price: 1500
+  condition: Very Good
+  weight: 38 kg
+  desc: "SLO-era Soldano cabinet in rare burgundy tolex. Matched Celestion Vintage 30s loaded by the factory, delivering the harmonically rich Soldano roar."

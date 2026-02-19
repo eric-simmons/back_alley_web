@@ -141,10 +141,12 @@
       <div class="h-px mb-5" style="background: linear-gradient(to right, transparent, #c07838, transparent);"></div>
       <p class="text-5xl font-bold animate-flicker" style="color: #c07838;">$<%= number_with_delimiter(@cab[:price]) %></p>
       <div class="h-px mt-5 mb-6" style="background: linear-gradient(to right, transparent, #c07838, transparent);"></div>
-      <button class="w-full py-3 text-xs tracking-[0.4em] uppercase transition-all duration-300 hover:brightness-125"
-              style="border: 1px solid #7a4a20; color: #c8a060; background: #1a1005;">
-        ── INQUIRE NOW ──
-      </button>
+      <%= form_with url: cart_add_path, method: :post, local: true do |f| %>
+        <%= f.hidden_field :cab_id, value: @cab[:id] %>
+        <%= f.submit "── ADD TO CART ──",
+              class: "w-full py-3 text-xs tracking-[0.4em] uppercase cursor-pointer transition-all duration-300 hover:brightness-125",
+              style: "border: 1px solid #7a4a20; color: #c8a060; background: #1a1005;" %>
+      <% end %>
     </div>
 
     <%# Notes / description %>
@@ -165,7 +167,7 @@
   </div>
 
   <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
-    <% PagesController::CABS.reject { |c| c[:id] == @cab[:id] }.first(6).each do |other| %>
+    <% Cab::ALL.reject { |c| c[:id] == @cab[:id] }.first(6).each do |other| %>
       <%= link_to cab_path(other[:id]),
             class: "group block p-3 transition-all duration-200",
             style: "border: 1px solid #1a1208; background: #0f0c08;" do %>
